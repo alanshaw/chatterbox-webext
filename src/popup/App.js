@@ -1,5 +1,6 @@
 const React = require('react')
 const browser = require('webextension-polyfill')
+const SetNamePage = require()
 
 class App extends React.Component {
   constructor (props) {
@@ -25,10 +26,10 @@ class App extends React.Component {
   render () {
     const { peerInfo } = this.state
     return (
-      <div style={{ textAlign: 'center', width: 500, height: 500 }}>
+      <div style={{ width: 640, height: 320 }}>
         {peerInfo ? (
           <div>Your IPFS peer ID: {peerInfo.id}</div>
-        ): null}
+        ) : null}
       </div>
     )
   }

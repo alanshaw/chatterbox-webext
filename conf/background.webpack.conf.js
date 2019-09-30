@@ -1,5 +1,6 @@
 'use strict'
 
+const Webpack = require('webpack')
 const Path = require('path')
 
 module.exports = {
@@ -9,7 +10,11 @@ module.exports = {
     path: Path.join(__dirname, '..', 'dist'),
     filename: 'background.bundle.js'
   },
-  plugins: [],
+  plugins: [
+    new Webpack.DefinePlugin({
+      'process.env.CHATTERBOX_RELAY_ADDRS': JSON.stringify(process.env.CHATTERBOX_RELAY_ADDRS),
+    })
+  ],
   module: {
     rules: [{
       test: /\.js$/,

@@ -3,14 +3,32 @@ const Chatterbox = require('chatterbox-core')
 const browser = require('webextension-polyfill')
 const log = require('debug')('chatterbox-webext:background')
 
+const Relays = process.env.CHATTERBOX_RELAY_ADDRS
+  ? process.env.CHATTERBOX_RELAY_ADDRS.split(',')
+  : []
+
 async function main () {
+  // TODO: use IPFS API to attmpt to connect to a local daemon before starting
+  // our own. Local daemon will have access to MDNS for local discovery so
+  // gives us quick messaging between local peers.
   const ipfs = await IPFS.create()
   const cbox = await Chatterbox(ipfs)
+
+  for (const addr of Relays) {
+    try {
+      await ipfs.swarm.connect(addr)
+      log(`🎾 connected to relay server ${addr}`)
+    } catch (err) {
+      console.error(`failed to connect to ${addr}`, err)
+    }
+  }
 
   // Expose cbox so popup can access it
   window.cbox = cbox
 
-  log('🚀 IPFS and Chatterbox are ready!')
+  log('📬 chatterbox ready!')
+
+  // TODO: listen to messages feed and show system notification for messages from friends
 
   for await (const friends of cbox.friends.feed()) {
     const unreadCount = friends.reduce((count, { lastMessage }) => {
