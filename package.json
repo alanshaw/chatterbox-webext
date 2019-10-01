@@ -20,9 +20,9 @@
   "author": "Alan Shaw",
   "license": "MIT",
   "dependencies": {
-    "chatterbox-core": "^0.1.0",
+    "chatterbox-core": "^0.1.1",
     "debug": "^4.1.1",
-    "ipfs": "^0.38.0-rc.6",
+    "ipfs": "^0.38.0",
     "tachyons": "^4.11.1",
     "webextension-polyfill": "^0.5.0"
   },

@@ -1,38 +1,38 @@
-const React = require('react')
-const browser = require('webextension-polyfill')
-const SetNamePage = require()
+/* eslint-env browser */
 
-class App extends React.Component {
+import React, { Component } from 'react'
+import HomePage from './HomePage'
+import SetNamePage from './SetNamePage'
+
+class App extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      peerInfo: null,
-      peers: [],
-      friends: []
-    }
+    this.state = { peerInfo: null }
   }
 
   componentDidMount () {
-    this.init()
+    this.updatePeerInfo()
   }
 
-  async init () {
-    const { cbox } = await browser.runtime.getBackgroundPage()
-
+  async updatePeerInfo () {
+    const { cbox } = this.props
     const peerInfo = await cbox.peer.get()
     this.setState({ peerInfo })
   }
 
   render () {
+    const { cbox } = this.props
     const { peerInfo } = this.state
     return (
       <div style={{ width: 640, height: 320 }}>
-        {peerInfo ? (
-          <div>Your IPFS peer ID: {peerInfo.id}</div>
-        ) : null}
+        {peerInfo && peerInfo.name ? (
+          <HomePage cbox={cbox} />
+        ) : (
+          <SetNamePage cbox={cbox} onChanged={() => this.updatePeerInfo()} />
+        )}
       </div>
     )
   }
 }
 
-module.exports = App
+export default App

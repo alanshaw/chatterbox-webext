@@ -12,7 +12,7 @@ module.exports = {
   },
   plugins: [
     new Webpack.DefinePlugin({
-      'process.env.CHATTERBOX_RELAY_ADDRS': JSON.stringify(process.env.CHATTERBOX_RELAY_ADDRS),
+      'process.env.CHATTERBOX_RELAY_ADDRS': JSON.stringify(process.env.CHATTERBOX_RELAY_ADDRS)
     })
   ],
   module: {

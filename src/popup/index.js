@@ -1,5 +1,11 @@
-const React = require('react')
-const ReactDOM = require('react-dom')
-const App = require('./App')
+import React from 'react'
+import ReactDOM from 'react-dom'
+import browser from 'webextension-polyfill'
+import App from './App'
 
-ReactDOM.render(<App />, document.getElementById('root'))
+async function main () {
+  const { cbox } = await browser.runtime.getBackgroundPage()
+  ReactDOM.render(<App cbox={cbox} />, document.getElementById('root'))
+}
+
+main()
