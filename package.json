@@ -10,12 +10,16 @@
     "build:js": "run-p build:js:*",
     "build:js:background": "webpack-cli --config conf/background.webpack.conf.js",
     "build:js:popup": "webpack-cli --config conf/popup.webpack.conf.js",
+    "build:js:popup:watch": "npm run build:js:popup -- --watch",
     "build:assets": "run-p build:assets:cp:*",
     "build:assets:cp:manifest.json": "cp src/manifest.json dist",
     "build:assets:cp:popup.html": "cp src/popup.html dist",
     "build:assets:cp:images": "cp -R src/images dist",
     "build:assets:cp:css": "mkdir -p dist/css && run-p build:assets:cp:css:*",
-    "build:assets:cp:css:tachyons.min.css": "cp node_modules/tachyons/css/tachyons.min.css dist/css/tachyons.min.css"
+    "build:assets:cp:css:tachyons.min.css": "cp node_modules/tachyons/css/tachyons.min.css dist/css/tachyons.min.css",
+    "build:assets:cp:css:ipfs.css": "cp node_modules/ipfs-css/ipfs.css dist/ipfs.css",
+    "build:assets:cp:fonts": "mkdir -p dist/fonts && run-p build:assets:cp:fonts:*",
+    "build:assets:cp:fonts:ipfs-css": "cp node_modules/ipfs-css/fonts/* dist/fonts"
   },
   "author": "Alan Shaw",
   "license": "MIT",
@@ -23,6 +27,8 @@
     "chatterbox-core": "^0.1.1",
     "debug": "^4.1.1",
     "ipfs": "^0.38.0",
+    "ipfs-css": "^0.13.1",
+    "react-identicons": "^1.1.7",
     "tachyons": "^4.11.1",
     "webextension-polyfill": "^0.5.0"
   },
