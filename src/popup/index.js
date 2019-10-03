@@ -1,11 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import browser from 'webextension-polyfill'
+import Chatterbox, { Provider } from './Chatterbox'
 import App from './App'
 
 async function main () {
-  const { cbox } = await browser.runtime.getBackgroundPage()
-  ReactDOM.render(<App cbox={cbox} />, document.getElementById('root'))
+  ReactDOM.render(
+    <Provider cbox={await Chatterbox()}>
+      <App />
+    </Provider>, document.getElementById('root'))
 }
 
 main()

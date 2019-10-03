@@ -1,25 +1,23 @@
 import React, { Component } from 'react'
+import { withChatterbox } from './Chatterbox'
 
-class SetNamePage extends Component {
-  constructor (props) {
-    super(props)
-    this.state = { name: '' }
-  }
+export class SetNamePage extends Component {
+  state = { name: '' }
 
   async componentDidMount () {
     const { cbox } = this.props
     const peerInfo = await cbox.peer.get()
 
-    if (peerInfo && peerInfo.name) {
+    if (peerInfo.name) {
       this.setState({ name: peerInfo.name })
     }
   }
 
-  async handleSubmit (e) {
+  handleSubmit = async e => {
     e.preventDefault()
     const { cbox } = this.props
     await cbox.peer.set({ name: this.state.name })
-    this.props.onChanged()
+    this.props.onChange(this.state.name)
   }
 
   render () {
@@ -31,7 +29,7 @@ class SetNamePage extends Component {
             <img className='pr3 v-mid' src='images/icon.svg' style={{ width: '50px' }} />
             <span className='montserrat fw6 f3 charcoal ttu v-mid'>Chatterbox</span>
           </div>
-          <form onSubmit={e => this.handleSubmit(e)}>
+          <form onSubmit={this.handleSubmit}>
             <input
               className='input-reset charcoal ba b--black-20 br1 pa2 mb2 db w-75 center focus-outline'
               onInput={e => this.setState({ name: e.target.value })}
@@ -53,4 +51,4 @@ class SetNamePage extends Component {
   }
 }
 
-export default SetNamePage
+export default withChatterbox(SetNamePage)

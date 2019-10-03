@@ -15,7 +15,7 @@ async function main () {
   const ipfs = await IPFS.create()
   const cbox = await Chatterbox(ipfs)
 
-  await swarmBind(Relays)
+  await swarmBind(ipfs, Relays)
 
   // Expose cbox so popup can access it
   window.cbox = cbox

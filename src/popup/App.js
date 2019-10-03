@@ -1,38 +1,33 @@
 /* eslint-env browser */
 
 import React, { Component } from 'react'
-import HomePage from './HomePage'
+import { withChatterbox } from './Chatterbox'
+import OverviewPage from './OverviewPage'
 import SetNamePage from './SetNamePage'
 
-class App extends Component {
-  constructor (props) {
-    super(props)
-    this.state = { peerInfo: null }
-  }
+export class App extends Component {
+  state = { name: '' }
 
-  componentDidMount () {
-    this.updatePeerInfo()
-  }
-
-  async updatePeerInfo () {
+  async componentDidMount () {
     const { cbox } = this.props
-    const peerInfo = await cbox.peer.get()
-    this.setState({ peerInfo })
+    const { name } = await cbox.peer.get()
+    if (name) this.setState({ name })
   }
+
+  handleNameChange = async name => this.setState({ name })
 
   render () {
-    const { cbox } = this.props
-    const { peerInfo } = this.state
+    const { name } = this.state
     return (
       <div style={{ width: 640, height: 320 }}>
-        {peerInfo && peerInfo.name ? (
-          <HomePage cbox={cbox} />
+        {name ? (
+          <OverviewPage />
         ) : (
-          <SetNamePage cbox={cbox} onChanged={() => this.updatePeerInfo()} />
+          <SetNamePage onChange={this.handleNameChange} />
         )}
       </div>
     )
   }
 }
 
-export default App
+export default withChatterbox(App)
