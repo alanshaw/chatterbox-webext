@@ -2,6 +2,7 @@ const IPFS = require('ipfs')
 const Chatterbox = require('chatterbox-core')
 const browser = require('webextension-polyfill')
 const log = require('debug')('chatterbox-webext:background')
+const swarmBind = require('ipfs-swarm-bind-shim')
 
 const Relays = process.env.CHATTERBOX_RELAY_ADDRS
   ? process.env.CHATTERBOX_RELAY_ADDRS.split(',')
@@ -14,14 +15,7 @@ async function main () {
   const ipfs = await IPFS.create()
   const cbox = await Chatterbox(ipfs)
 
-  for (const addr of Relays) {
-    try {
-      await ipfs.swarm.connect(addr)
-      log(`🎾 connected to relay server ${addr}`)
-    } catch (err) {
-      console.error(`failed to connect to ${addr}`, err)
-    }
-  }
+  await swarmBind(Relays)
 
   // Expose cbox so popup can access it
   window.cbox = cbox

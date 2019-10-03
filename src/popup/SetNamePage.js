@@ -15,7 +15,8 @@ class SetNamePage extends Component {
     }
   }
 
-  async handleSubmit () {
+  async handleSubmit (e) {
+    e.preventDefault()
     const { cbox } = this.props
     await cbox.peer.set({ name: this.state.name })
     this.props.onChanged()
@@ -30,7 +31,7 @@ class SetNamePage extends Component {
             <img className='pr3 v-mid' src='images/icon.svg' style={{ width: '50px' }} />
             <span className='montserrat fw6 f3 charcoal ttu v-mid'>Chatterbox</span>
           </div>
-          <form onSubmit={() => { this.handleSubmit(); return false }}>
+          <form onSubmit={e => this.handleSubmit(e)}>
             <input
               className='input-reset charcoal ba b--black-20 br1 pa2 mb2 db w-75 center focus-outline'
               onInput={e => this.setState({ name: e.target.value })}

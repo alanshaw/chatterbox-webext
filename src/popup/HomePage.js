@@ -70,7 +70,7 @@ class App extends Component {
   render () {
     const { peerInfo, peers, friends } = this.state
     return (
-      <div>
+      <div className='flex h-100'>
         <PeersList peers={peers} />
         <FriendsList friends={friends} />
         <BroadcastMessagePanel peerInfo={peerInfo} onSend={text => this.handleMessageSend(text)} />
