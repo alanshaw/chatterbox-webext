@@ -19,13 +19,19 @@ export class OverviewPage extends Component {
 
     return (
       <div className='flex h-100'>
-        <PeersList onPeerClick={this.handlePeerClick} />
-        <FriendsList onFriendClick={this.handlePeerClick} />
-        {selectedPeerId ? (
-          <PeerInfoPanel peerId={selectedPeerId} onClose={this.handlePeerInfoClose} />
-        ) : (
-          <BroadcastMessagePanel />
-        )}
+        <div className='overflow-y-scroll h-100 flex-none'>
+          <PeersList onPeerClick={this.handlePeerClick} />
+        </div>
+        <div className='overflow-y-scroll h-100 flex-none'>
+          <FriendsList onFriendClick={this.handlePeerClick} />
+        </div>
+        <div className='overflow-y-scroll h-100 flex-auto'>
+          {selectedPeerId ? (
+            <PeerInfoPanel peerId={selectedPeerId} onClose={this.handlePeerInfoClose} />
+          ) : (
+            <BroadcastMessagePanel />
+          )}
+        </div>
       </div>
     )
   }

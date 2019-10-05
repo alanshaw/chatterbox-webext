@@ -25,19 +25,22 @@ export class PeerInfoPanel extends Component {
     const { cbox, peerId } = this.props
     const controller = this.abortController = new AbortController()
 
-    this.subscribeMessages(controller.signal)
+    this.subscribeMessages(peerId, controller.signal)
     this.subscribeFriends(controller.signal)
 
     const peerInfo = await cbox.peers.get(peerId)
     this.setState({ peerInfo })
   }
 
-  async subscribeMessages (signal) {
+  async subscribeMessages (peerId, signal) {
     const { cbox } = this.props
 
     try {
-      for await (const messages of cbox.messages.feed({ signal })) {
+      for await (const messages of cbox.messages.feed(peerId, { signal })) {
         this.setState({ messages })
+        messages.forEach(m => {
+          if (!m.readAt) cbox.messages.read(peerId, m.id)
+        })
       }
     } catch (err) {
       if (err.type !== 'aborted') throw err
@@ -75,7 +78,7 @@ export class PeerInfoPanel extends Component {
     if (!peerInfo) return null
 
     return (
-      <div>
+      <div className='pa3'>
         <button onClick={onClose}>Close</button>
         {isFriend ? (
           <button onClick={this.handleRemoveFriendClick}>Remove friend</button>

@@ -22,20 +22,59 @@ async function main () {
 
   log('📬 chatterbox ready!')
 
-  // TODO: listen to messages feed and show system notification for messages from friends
+  let prevFriends = []
 
   for await (const friends of cbox.friends.feed()) {
+    const newMessageFriends = getFriendsWithNewMessages(prevFriends, friends)
+
+    while (newMessageFriends.length) {
+      const friend = newMessageFriends.pop()
+
+      try {
+        await browser.notifications.create({
+          type: 'basic',
+          iconUrl: browser.extension.getURL('images/icon.svg'),
+          title: `Message from ${friend.name || friend.id}`,
+          message: truncate(friend.lastMessage.text, 30)
+        })
+      } catch (err) {
+        log(err)
+      }
+    }
+
     const unreadCount = friends.reduce((count, { lastMessage }) => {
       return lastMessage && !lastMessage.readAt ? count + 1 : count
     }, 0)
 
     try {
       await browser.browserAction.setBadgeBackgroundColor({ color: '#ea5037' })
+      await browser.browserAction.setBadgeTextColor({ color: 'white' })
       await browser.browserAction.setBadgeText({ text: unreadCount ? `${unreadCount}` : '' })
     } catch (err) {
       log(err)
     }
+
+    prevFriends = friends
   }
+}
+
+function truncate (str, len) {
+  return str.length <= len ? str : str.slice(0, len) + '…'
+}
+
+function getFriendsWithNewMessages (prevFriends, friends) {
+  return friends.reduce((friends, f) => {
+    if (!f.lastMessage) return friends
+
+    const prev = prevFriends.find(p => p.id === f.id)
+    if (!prev) return friends
+
+    if (!prev.lastMessage || f.lastMessage.id !== prev.lastMessage.id) {
+      return friends.concat(f)
+    }
+
+    return friends
+  }, [])
 }
 
 main()

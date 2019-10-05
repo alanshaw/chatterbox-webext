@@ -3,6 +3,7 @@
 import React, { Component } from 'react'
 import Identicon from 'react-identicons'
 import { withChatterbox } from './Chatterbox'
+import Badge from './Badge'
 
 export class FriendsList extends Component {
   state = { friends: [] }
@@ -35,23 +36,27 @@ export class FriendsList extends Component {
   render () {
     const { friends } = this.state
     return (
-      <div>
-        <h1>Friends</h1>
+      <div className='pa3 bg-light-pink' style={{ minHeight: '100%' }}>
+        <img src='images/stroke_heart.svg' width='35' className='mb2' title='Friends' />
         {friends.length ? (
-          <ul>
-            {friends.map(({ id, name }) => {
-              return (
-                <li key={id} title={name ? `${name} (${id})` : id}>
-                  <button data-peer-id={id} className='pointer' onClick={this.handleFriendClick}>
-                    <Identicon string={id} size={30} />
-                  </button>
-                </li>
-              )
-            })}
+          <ul className='list mv0 pl0'>
+            {friends.map(({ id, name, lastMessage }) => (
+              <li key={id} title={name ? `${name} (${id})` : id} className='mb2'>
+                <button data-peer-id={id} className='dib bg-white-90 bw0 br1 pa1 hover-outline pointer relative outline-0' onClick={this.handleFriendClick} style={{ lineHeight: 0 }}>
+                  <Identicon string={id} size={25} />
+                  <Badge count={!lastMessage || lastMessage.readAt ? 0 : 1} />
+                </button>
+              </li>
+            ))}
           </ul>
-        ) : (
-          <p>No friends yet</p>
-        )}
+        ) : null}
+        <button
+          type='button'
+          className='db montserrat fw6 f4 lh-title hot-pink w-100 bg-white-40 hover-bg-white-90 bw0 br1 pa1 hover-outline pointer outline-0'
+          title='Add a friend'
+        >
+        +
+        </button>
       </div>
     )
   }

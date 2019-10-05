@@ -48,26 +48,20 @@ export class PeersList extends Component {
 
   render () {
     const { peers } = this.state
-    return (
-      <div>
-        <h1>Peers</h1>
-        {peers.length ? (
-          <ul>
-            {peers.map(({ id, name }) => {
-              return (
-                <li key={id} title={name ? `${name} (${id})` : id}>
-                  <button data-peer-id={id} className='pointer' onClick={this.handlePeerClick}>
-                    <Identicon string={id} size={30} />
-                  </button>
-                </li>
-              )
-            })}
-          </ul>
-        ) : (
-          <p>No peers seen in the last hour</p>
-        )}
+    return peers.length ? (
+      <div className='pa3 bg-aqua-muted' style={{ minHeight: '100%' }}>
+        <img src='images/stroke_distributed.svg' width='35' className='mb2' title='Peers' />
+        <ul className='list mv0 pl0'>
+          {peers.map(({ id, name }) => (
+            <li key={id} title={name ? `${name} (${id})` : id} className='mb2'>
+              <button data-peer-id={id} className='dib bg-white-90 bw0 br1 pa1 hover-outline pointer outline-0' onClick={this.handlePeerClick} style={{ lineHeight: 0 }}>
+                <Identicon string={id} size={25} />
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
-    )
+    ) : null
   }
 }
 
