@@ -12,6 +12,12 @@ export class BroadcastMessagePanel extends Component {
 
   handleInput = e => this.setState({ text: e.target.value })
 
+  handleKeyDown = e => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      this.handleSubmit(e)
+    }
+  }
+
   handleSubmit = async e => {
     e.preventDefault()
     const { cbox } = this.props
@@ -31,7 +37,7 @@ export class BroadcastMessagePanel extends Component {
           </div>
           <div className='montserrat fw6 f4 charcoal ttu mb3'>{peerInfo.name} <span className='fw4'>says:</span></div>
           <form onSubmit={this.handleSubmit}>
-            <textarea onInput={this.handleInput} value={text} className='input-reset charcoal ba b--black-20 br3 pa2 mb2 focus-outline v-btm' />
+            <textarea onInput={this.handleInput} value={text} className='input-reset charcoal ba b--black-20 br3 pa2 mb2 focus-outline v-btm' onKeyDown={this.handleKeyDown} />
             <button type='submit' className={`transition-all sans-serif dib fw5 lh-copy bn br1 pv2 ph3 pointer focus-outline white bg-${text ? 'green' : 'gray'} white ma2`} disabled={!text.trim()}>Send</button>
           </form>
         </div>
