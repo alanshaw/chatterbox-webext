@@ -5,7 +5,7 @@ import Identicon from 'react-identicons'
 import { withChatterbox } from './Chatterbox'
 
 export class PeerInfoPanel extends Component {
-  state = { peerInfo: null, messages: [], isFriend: false }
+  state = { peerInfo: null, messages: [] }
 
   async componentDidMount () {
     this.init()
@@ -26,7 +26,6 @@ export class PeerInfoPanel extends Component {
     const controller = this.abortController = new AbortController()
 
     this.subscribeMessages(peerId, controller.signal)
-    this.subscribeFriends(controller.signal)
 
     const peerInfo = await cbox.peers.get(peerId)
     this.setState({ peerInfo })
@@ -47,18 +46,6 @@ export class PeerInfoPanel extends Component {
     }
   }
 
-  async subscribeFriends (signal) {
-    const { cbox } = this.props
-    try {
-      for await (const friends of cbox.friends.feed({ signal })) {
-        const isFriend = friends.some(f => f.id === this.props.peerId)
-        this.setState({ isFriend })
-      }
-    } catch (err) {
-      if (err.type !== 'aborted') throw err
-    }
-  }
-
   handleAddFriendClick = async e => {
     e.preventDefault()
     const { cbox } = this.props
@@ -73,14 +60,14 @@ export class PeerInfoPanel extends Component {
 
   render () {
     const { peerId, onClose } = this.props
-    const { peerInfo, messages, isFriend } = this.state
+    const { peerInfo, messages } = this.state
 
     if (!peerInfo) return null
 
     return (
       <div className='pa3'>
         <button onClick={onClose}>Close</button>
-        {isFriend ? (
+        {peerInfo.isFriend ? (
           <button onClick={this.handleRemoveFriendClick}>Remove friend</button>
         ) : (
           <button onClick={this.handleAddFriendClick}>Add friend</button>
