@@ -55,6 +55,7 @@ export class FriendsList extends Component {
           type='button'
           className='db montserrat fw6 f4 lh-title hot-pink w-100 bg-white-40 hover-bg-white-90 bw0 br1 pa1 hover-outline pointer outline-0'
           title='Add a friend'
+          onClick={this.props.onAddFriendClick}
         >
         +
         </button>

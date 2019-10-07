@@ -6,16 +6,40 @@ import PeersList from './PeersList'
 import FriendsList from './FriendsList'
 import BroadcastMessagePanel from './BroadcastMessagePanel'
 import PeerInfoPanel from './PeerInfoPanel'
+import AddFriendPanel from './AddFriendPanel'
+
+const Panels = {
+  PeerInfoPanel,
+  AddFriendPanel,
+  BroadcastMessagePanel
+}
 
 export class OverviewPage extends Component {
-  state = { selectedPeerId: null }
+  state = { panelName: 'BroadcastMessagePanel', panelProps: {} }
 
-  handlePeerClick = peerId => this.setState({ selectedPeerId: peerId })
+  handlePeerClick = peerId => this.setState({
+    panelName: 'PeerInfoPanel',
+    panelProps: { peerId }
+  })
 
-  handlePeerInfoClose = () => this.setState({ selectedPeerId: null })
+  handlePanelClose = () => this.setState({
+    panelName: 'BroadcastMessagePanel',
+    panelProps: {}
+  })
+
+  handleAddFriendClick = () => this.setState({
+    panelName: 'AddFriendPanel',
+    panelProps: { onAdd: this.handleAddFriend }
+  })
+
+  handleAddFriend = peerId => this.setState({
+    panelName: 'PeerInfoPanel',
+    panelProps: { peerId }
+  })
 
   render () {
-    const { selectedPeerId } = this.state
+    const { panelName, panelProps } = this.state
+    const Panel = Panels[panelName]
 
     return (
       <div className='flex h-100'>
@@ -23,14 +47,10 @@ export class OverviewPage extends Component {
           <PeersList onPeerClick={this.handlePeerClick} />
         </div>
         <div className='overflow-y-scroll h-100 flex-none'>
-          <FriendsList onFriendClick={this.handlePeerClick} />
+          <FriendsList onFriendClick={this.handlePeerClick} onAddFriendClick={this.handleAddFriendClick} />
         </div>
         <div className='overflow-y-scroll h-100 flex-auto'>
-          {selectedPeerId ? (
-            <PeerInfoPanel peerId={selectedPeerId} onClose={this.handlePeerInfoClose} />
-          ) : (
-            <BroadcastMessagePanel />
-          )}
+          <Panel {...panelProps} onClose={this.handlePanelClose} />
         </div>
       </div>
     )
