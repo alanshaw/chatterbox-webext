@@ -25,11 +25,12 @@
   "author": "Alan Shaw",
   "license": "MIT",
   "dependencies": {
-    "chatterbox-core": "^0.1.4",
+    "chatterbox-core": "^0.1.5",
     "debug": "^4.1.1",
     "ipfs": "^0.38.0",
     "ipfs-css": "^0.13.1",
     "ipfs-swarm-bind-shim": "^0.1.0",
+    "moment": "^2.24.0",
     "react-identicons": "^1.1.7",
     "react-provide": "^1.0.2",
     "tachyons": "^4.11.1",

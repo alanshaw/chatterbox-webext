@@ -1,7 +1,7 @@
 /* eslint-env browser */
 
 import React, { Component } from 'react'
-import { withChatterbox } from './Chatterbox'
+import { withChatterbox } from './lib/Chatterbox'
 import PeersList from './PeersList'
 import FriendsList from './FriendsList'
 import BroadcastMessagePanel from './BroadcastMessagePanel'

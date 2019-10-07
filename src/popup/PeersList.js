@@ -2,7 +2,8 @@
 
 import React, { Component } from 'react'
 import Identicon from 'react-identicons'
-import { withChatterbox } from './Chatterbox'
+import { withOnUnloadUnmount } from './lib/OnUnloadUnmount'
+import { withChatterbox } from './lib/Chatterbox'
 
 export class PeersList extends Component {
   state = { peerInfo: null, peers: [] }
@@ -65,4 +66,4 @@ export class PeersList extends Component {
   }
 }
 
-export default withChatterbox(PeersList)
+export default withOnUnloadUnmount(withChatterbox(PeersList))

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withChatterbox } from './Chatterbox'
+import { withChatterbox } from './lib/Chatterbox'
 
 export class SetNamePage extends Component {
   state = { name: '' }

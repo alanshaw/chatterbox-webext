@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Chatterbox, { Provider } from './Chatterbox'
+import Chatterbox, { Provider } from './lib/Chatterbox'
 import App from './App'
 
 async function main () {

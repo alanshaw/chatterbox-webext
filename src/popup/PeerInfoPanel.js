@@ -2,7 +2,9 @@
 
 import React, { Component } from 'react'
 import Identicon from 'react-identicons'
-import { withChatterbox } from './Chatterbox'
+import moment from 'moment'
+import { withOnUnloadUnmount } from './lib/OnUnloadUnmount'
+import { withChatterbox } from './lib/Chatterbox'
 
 export class PeerInfoPanel extends Component {
   state = { peerInfo: null, messages: [] }
@@ -48,42 +50,68 @@ export class PeerInfoPanel extends Component {
 
   handleAddFriendClick = async e => {
     e.preventDefault()
-    const { cbox } = this.props
-    await cbox.friends.add(this.props.peerId)
+    const { cbox, peerId } = this.props
+    await cbox.friends.add(peerId)
+    const peerInfo = await cbox.peers.get(peerId)
+    this.setState({ peerInfo })
   }
 
   handleRemoveFriendClick = async e => {
     e.preventDefault()
-    const { cbox } = this.props
-    await cbox.friends.remove(this.props.peerId)
+    const { cbox, peerId } = this.props
+    await cbox.friends.remove(peerId)
+    const peerInfo = await cbox.peers.get(peerId)
+    this.setState({ peerInfo })
   }
 
   render () {
-    const { peerId, onClose } = this.props
+    const { onClose } = this.props
     const { peerInfo, messages } = this.state
 
     if (!peerInfo) return null
 
     return (
       <div className='pa3'>
-        <button onClick={onClose}>Close</button>
-        {peerInfo.isFriend ? (
-          <button onClick={this.handleRemoveFriendClick}>Remove friend</button>
-        ) : (
-          <button onClick={this.handleAddFriendClick}>Add friend</button>
-        )}
-        <Identicon string={peerId} size={50} />
-        {peerInfo.name ? (
-          <p>{peerInfo.name}<br />{peerId}</p>
-        ) : (
-          <p>{peerId}</p>
-        )}
-        <ul>
-          {messages.map(m => <li key={m.id}>{m.text}</li>)}
-        </ul>
+        <div class='tr'>
+          <button onClick={onClose} className='transition-all f3 bg-transparent bw0 pa0 black-20 hover-black-90 pointer lh-solid'>ⓧ</button>
+        </div>
+        <div className='flex'>
+          <div className='flex-none ml3 mr3'>
+            <div className='dib bg-white-90 br1 pa3 hover-outline relative' style={{ boxShadow: '0 0 0 .2rem rgba(201, 210, 215, .4)', marginBottom: '-1rem', lineHeight: 0 }}>
+              <div className='absolute' style={{ top: '-20px', right: '-15px' }}>
+                {peerInfo.isFriend ? (
+                  <button onClick={this.handleRemoveFriendClick} className='transition-all dib f5 bn br-100 pointer focus-outline hot-pink bg-light-pink ma2 hover-bg-gray hover-white center lh-solid' style={{ width: '30px', height: '30px' }} title='Click to remove this peer from your friends list'>❤</button>
+                ) : (
+                  <button onClick={this.handleAddFriendClick} className='transition-all dib f5 bn br-100 pointer focus-outline hover-hot-pink ma2 bg-gray white center lh-solid' style={{ width: '30px', height: '30px' }} title='Click to add this peer as a friend'>❤</button>
+                )}
+              </div>
+              <Identicon string={peerInfo.id} size={50} />
+            </div>
+          </div>
+          <div className='flex-auto pt3'>
+            {peerInfo.name ? (
+              <div className='montserrat fw6 f6 charcoal ttu mb2'>{peerInfo.name}</div>
+            ) : null}
+            <div className='montserrat fw4 charcoal-muted mb3' style={{ fontSize: '.7rem' }}>{peerInfo.id}</div>
+          </div>
+        </div>
+        <Message message={messages[messages.length - 1]} />
       </div>
     )
   }
 }
 
-export default withChatterbox(PeerInfoPanel)
+function Message ({ message }) {
+  if (!message) return null
+  const { text, receivedAt } = message
+  return (
+    <div className='br3 bg-white pa3 pt4'>
+      <div className='f3 montserrat mb3'>{text}</div>
+      <div className='montserrat fw4 f7 charcoal-muted tr' title={new Date(receivedAt).toISOString()}>
+        {moment(receivedAt).fromNow()}
+      </div>
+    </div>
+  )
+}
+
+export default withOnUnloadUnmount(withChatterbox(PeerInfoPanel))

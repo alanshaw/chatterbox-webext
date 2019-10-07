@@ -2,7 +2,8 @@
 
 import React, { Component } from 'react'
 import Identicon from 'react-identicons'
-import { withChatterbox } from './Chatterbox'
+import { withOnUnloadUnmount } from './lib/OnUnloadUnmount'
+import { withChatterbox } from './lib/Chatterbox'
 import Badge from './Badge'
 
 export class FriendsList extends Component {
@@ -62,4 +63,4 @@ export class FriendsList extends Component {
   }
 }
 
-export default withChatterbox(FriendsList)
+export default withOnUnloadUnmount(withChatterbox(FriendsList))

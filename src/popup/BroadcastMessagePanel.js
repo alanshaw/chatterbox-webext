@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Identicon from 'react-identicons'
-import { withChatterbox } from './Chatterbox'
+import { withChatterbox } from './lib/Chatterbox'
 
 export class BroadcastMessagePanel extends Component {
   state = { peerInfo: null, text: '' }
