@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import Identicon from 'react-identicons'
-import moment from 'moment'
+import fromNow from 'fromnow'
 import { withOnUnloadUnmount } from './lib/OnUnloadUnmount'
 import { withChatterbox } from './lib/Chatterbox'
 
@@ -108,7 +108,7 @@ function Message ({ message }) {
     <div className='br3 bg-white pa3 pt4'>
       <div className='f3 montserrat mb3'>{text}</div>
       <div className='montserrat fw4 f7 charcoal-muted tr' title={new Date(receivedAt).toISOString()}>
-        {moment(receivedAt).fromNow()}
+        {fromNow(receivedAt, { and: true, suffix: true })}
       </div>
     </div>
   )
