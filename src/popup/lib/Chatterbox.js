@@ -6,7 +6,7 @@ export default async () => {
   return cbox
 }
 
-// Create a Provider that'll put and object called 'cbox' into context
+// Create a Provider that'll put an object called 'cbox' into context
 export const Provider = contextProvider('cbox')
 
 // Create a helper that pulls 'cbox' out of context and passes it as a prop
