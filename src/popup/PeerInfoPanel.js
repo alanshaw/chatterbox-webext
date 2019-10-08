@@ -89,9 +89,7 @@ export class PeerInfoPanel extends Component {
             </div>
           </div>
           <div className='flex-auto pt3'>
-            {peerInfo.name ? (
-              <div className='montserrat fw6 f6 charcoal ttu mb2'>{peerInfo.name}</div>
-            ) : null}
+            <div className='montserrat fw6 f6 charcoal ttu mb2'>{peerInfo.name || 'No name'}</div>
             <div className='montserrat fw4 charcoal-muted mb3' style={{ fontSize: '.7rem' }}>{peerInfo.id}</div>
           </div>
         </div>
