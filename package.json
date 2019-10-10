@@ -5,7 +5,10 @@
   "private": true,
   "main": "src/index.js",
   "scripts": {
-    "test": "standard",
+    "test": "npm run lint",
+    "lint": "run-s lint:*",
+    "lint:standard": "standard",
+    "lint:web-ext": "web-ext lint -s dist",
     "build": "mkdir -p dist && run-p build:js build:assets",
     "build:js": "run-p build:js:*",
     "build:js:background": "webpack-cli --config conf/background.webpack.conf.js",
