@@ -20,7 +20,8 @@
     "build:assets:cp:css:ipfs.css": "cp node_modules/ipfs-css/ipfs.css dist/ipfs.css",
     "build:assets:cp:css:common.css": "cp src/css/common.css dist/css/common.css",
     "build:assets:cp:fonts": "mkdir -p dist/fonts && run-p build:assets:cp:fonts:*",
-    "build:assets:cp:fonts:ipfs-css": "cp node_modules/ipfs-css/fonts/* dist/fonts"
+    "build:assets:cp:fonts:ipfs-css": "cp node_modules/ipfs-css/fonts/* dist/fonts",
+    "package": "web-ext build -s dist"
   },
   "author": "Alan Shaw",
   "license": "MIT",
@@ -47,6 +48,7 @@
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
     "standard": "^14.3.1",
+    "web-ext": "^3.2.0",
     "webpack": "^4.41.0",
     "webpack-cli": "^3.3.9"
   },

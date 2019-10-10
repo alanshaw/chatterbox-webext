@@ -34,3 +34,11 @@ CHATTERBOX_RELAY_ADDRS=/ip4/138.68.55.103/tcp/4138/ws/ipfs/QmTtZnqydWPKxRDuDLbMj
 Current production relay addrs:
 
 * `/ip4/138.68.55.103/tcp/4138/ws/ipfs/QmTtZnqydWPKxRDuDLbMjo4NHJPwrascKgxQwpBSx5Zd7k`
+
+#### Package
+
+To package for web extension stores, run the following commands:
+
+1. Build the extension (as above) including any relay addrs
+2. Run `npm run package`
+3. Output can be found in the `web-ext-artifacts` directory
