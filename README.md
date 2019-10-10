@@ -9,7 +9,7 @@
 
 | <img src="https://unpkg.com/@browser-logos/firefox@2.0.0/firefox_32x32.png" width="16"> [Firefox](https://www.mozilla.org/firefox/new/) | <img src="https://unpkg.com/@browser-logos/chrome@1.0.4/chrome_32x32.png" width="16"> [Chrome](https://www.google.com/chrome/)
 |---|---|
-| [![Install From AMO](https://ipfs.io/ipfs/QmWNa64XjA78QvK3zG2593bSMizkDXXcubDHjnRDYUivqt)](https://addons.mozilla.org/firefox/addon/chatterbox/) | TBC |
+| [![Install From AMO](https://ipfs.io/ipfs/QmWNa64XjA78QvK3zG2593bSMizkDXXcubDHjnRDYUivqt)](https://addons.mozilla.org/firefox/addon/chatterbox/) | [![Install from Chrome Store](https://ipfs.io/ipfs/QmXeTTMAxJVSZLqNcVzBdsAZKhWUpP7w7QAZ8f3Bnmk3Mj)](https://chrome.google.com/webstore/detail/chatterbox/ajomkahbmnpohccinnahekchplpfaejg) |
 
 ### Install for Development
 
