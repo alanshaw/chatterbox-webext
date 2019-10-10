@@ -8,6 +8,8 @@ TODO: add app store URLs
 
 ### Install for Development
 
+Ensure Node.js 12+ and npm 6+ are installed.
+
 1. Clone this repo
 2. Install the project dependencies with `npm install`
 3. Build the project `npm run build` (see [build](#build) below)
