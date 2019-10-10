@@ -1,5 +1,8 @@
 # Chatterbox Web Extension
 
+[![dependencies Status](https://david-dm.org/alanshaw/chatterbox-core/status.svg)](https://david-dm.org/alanshaw/chatterbox-webext)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+
 > P2P messaging application bundled as a web extension for Firefox and Chrome
 
 ## Install
@@ -46,3 +49,11 @@ To package for web extension stores, run the following commands:
 1. Build the extension (as above) including any relay addrs
 2. Run `npm run package`
 3. Output can be found in the `web-ext-artifacts` directory
+
+## Contribute
+
+Feel free to dive in! [Open an issue](https://github.com/alanshaw/chatterbox-webext/issues/new) or submit PRs.
+
+## License
+
+[MIT](LICENSE) © Alan Shaw

@@ -58,5 +58,13 @@
   "browserslist": ">1.5% or node >=10 and not ios_saf <13 and not ie 11 and not dead",
   "standard": {
     "parser": "babel-eslint"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alanshaw/chatterbox-webext.git"
+  },
+  "bugs": {
+    "url": "https://github.com/alanshaw/chatterbox-webext/issues"
+  },
+  "homepage": "https://github.com/alanshaw/chatterbox-webext#readme"
 }
