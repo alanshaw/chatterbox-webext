@@ -2,8 +2,11 @@ import { contextProvider, withContext } from 'react-provide'
 import browser from 'webextension-polyfill'
 
 export default async () => {
-  const { cbox } = await browser.runtime.getBackgroundPage()
-  return cbox
+  while (true) {
+    const { cbox } = await browser.runtime.getBackgroundPage()
+    if (cbox) return cbox
+    await new Promise(resolve => setTimeout(resolve, 100))
+  }
 }
 
 // Create a Provider that'll put an object called 'cbox' into context

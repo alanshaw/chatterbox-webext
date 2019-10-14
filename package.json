@@ -29,7 +29,7 @@
   "author": "Alan Shaw",
   "license": "MIT",
   "dependencies": {
-    "chatterbox-core": "^0.2.1",
+    "chatterbox-core": "^0.2.2",
     "debug": "^4.1.1",
     "fromnow": "^3.0.1",
     "ipfs": "^0.38.0",
