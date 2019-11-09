@@ -1,15 +1,17 @@
-const IPFS = require('ipfs')
-const Chatterbox = require('chatterbox-core')
-const browser = require('webextension-polyfill')
-const log = require('debug')('chatterbox-webext:background')
-const swarmBind = require('ipfs-swarm-bind-shim')
+import IPFS from 'ipfs'
+import Chatterbox from 'chatterbox-core'
+import browser from 'webextension-polyfill'
+import debug from 'debug'
+import swarmBind from 'ipfs-swarm-bind-shim'
+
+const log = debug('chatterbox-webext:background')
 
 const Relays = process.env.CHATTERBOX_RELAY_ADDRS
   ? process.env.CHATTERBOX_RELAY_ADDRS.split(',')
   : []
 
 async function main () {
-  // TODO: use IPFS API to attmpt to connect to a local daemon before starting
+  // TODO: use IPFS API to attempt to connect to a local daemon before starting
   // our own. Local daemon will have access to MDNS for local discovery so
   // gives us quick messaging between local peers.
   const ipfs = await IPFS.create()
