@@ -5,6 +5,7 @@ import Identicon from 'react-identicons'
 import fromNow from 'fromnow'
 import { withOnUnloadUnmount } from './lib/OnUnloadUnmount'
 import { withChatterbox } from './lib/Chatterbox'
+import StatusIndicator from './StatusIndicator'
 
 export class PeerInfoPanel extends Component {
   state = { peerInfo: null, messages: [] }
@@ -88,9 +89,17 @@ export class PeerInfoPanel extends Component {
               <Identicon string={peerInfo.id} size={50} />
             </div>
           </div>
-          <div className='flex-auto pt3'>
-            <div className='montserrat fw6 f6 charcoal ttu mb2'>{peerInfo.name || 'No name'}</div>
-            <div className='montserrat fw4 charcoal-muted mb3' style={{ fontSize: '.7rem' }}>{peerInfo.id}</div>
+          <div className='flex-auto pt2'>
+            <div className='montserrat fw6 f7 charcoal ttu mb2'>{peerInfo.name || 'No name'}</div>
+            <div
+              className='montserrat fw4 f7 charcoal ttu mb2'
+              title={peerInfo.lastSeenAt
+                ? `Last seen ${fromNow(peerInfo.lastSeenAt, { and: true, suffix: true })}`
+                : 'Never seen online!'}
+            >
+              <StatusIndicator lastSeenAt={peerInfo.lastSeenAt} showLabel />
+            </div>
+            <div className='montserrat fw4 charcoal-muted mb2' style={{ fontSize: '.7rem' }}>{peerInfo.id}</div>
           </div>
         </div>
         <Message message={messages[messages.length - 1]} />

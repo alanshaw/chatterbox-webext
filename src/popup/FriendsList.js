@@ -5,9 +5,10 @@ import Identicon from 'react-identicons'
 import { withOnUnloadUnmount } from './lib/OnUnloadUnmount'
 import { withChatterbox } from './lib/Chatterbox'
 import Badge from './Badge'
+import StatusIndicator from './StatusIndicator'
 
 export class FriendsList extends Component {
-  state = { friends: [] }
+  state = { friends: [], now: Date.now() }
 
   async componentDidMount () {
     const controller = this.abortController = new AbortController()
@@ -41,11 +42,14 @@ export class FriendsList extends Component {
         <img src='images/stroke_heart.svg' width='35' className='mb2' title='Friends' />
         {friends.length ? (
           <ul className='list mv0 pl0'>
-            {friends.map(({ id, name, lastMessage }) => (
+            {friends.map(({ id, name, lastMessage, lastSeenAt }) => (
               <li key={id} title={name ? `${name} (${id})` : id} className='mb2'>
                 <button data-peer-id={id} className='dib bg-white-90 bw0 br1 pa1 hover-outline pointer relative outline-0' onClick={this.handleFriendClick} style={{ lineHeight: 0 }}>
                   <Identicon string={id} size={25} />
                   <Badge count={!lastMessage || lastMessage.readAt ? 0 : 1} />
+                  <div className='absolute' style={{ top: -3, left: -3 }}>
+                    <StatusIndicator lastSeenAt={lastSeenAt} />
+                  </div>
                 </button>
               </li>
             ))}
